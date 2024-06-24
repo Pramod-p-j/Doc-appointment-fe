@@ -1,0 +1,38 @@
+body {
+  background: linear-gradient(145deg, #71b7e6, #9b59b6);
+}
+.registerScreenContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 50px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 600px;
+  background-color: #fff;
+  padding: 25px 30px;
+  border-bottom: 5px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+.title {
+  font-size: 32px;
+  margin-top: 2px;
+}
+.form-group {
+  padding: 10px;
+}
+.formLabel {
+  position: absolute;
+  left: 490px;
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+.formField {
+  width: 180px;
+}
+.roleDropdown {
+  width: 180px;
+  height: 12px;
+}
