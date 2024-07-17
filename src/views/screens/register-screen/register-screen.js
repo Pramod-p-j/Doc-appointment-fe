@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { roleOptions } from "../../../config/config";
 import registerServices from "../../../services/register-services";
@@ -15,11 +15,14 @@ function RegisterComponent() {
     role: "",
   };
 
+  let navigate = useNavigate();
+
   const validationSchema = Yup.object({
     name: Yup.string().required("Name is required"),
     email: Yup.string()
       .email("Invalid email address")
       .required("Email is required"),
+    phone: Yup.string().required("Phone number is required"),
     password: Yup.string()
       .min(6, "Password must be at least 6 characters")
       .required("Password is required"),
@@ -32,7 +35,13 @@ function RegisterComponent() {
   const onSubmit = async (values, { setSubmitting, resetForm }) => {
     registerServices
       .registerNewUser(values)
-      .then((res) => console.log("res in register screen", res))
+      .then((res) => {
+        if (res.status === 200) {
+          //write a toast msg
+          let homePath = `/home`;
+          navigate(homePath);
+        }
+      })
       .catch((err) => err);
     resetForm();
     setSubmitting(false);
@@ -70,12 +79,29 @@ function RegisterComponent() {
             </div>
 
             <div className="form-group">
+              <label className="formLabel" htmlFor="phone">
+                Phone
+              </label>
+              <Field
+                className="formField"
+                type="number"
+                id="phone"
+                name="phone"
+              />
+              <ErrorMessage name="phone" component="div" className="error" />
+            </div>
+
+            <div className="form-group">
               <label className="formLabel" htmlFor="role">
                 Role:
               </label>
               <Field className="formField" as="select" id="role" name="role">
                 {roleOptions.map((item) => (
-                  <option className="roleDropdown" value={item.id} label={item.name} />
+                  <option
+                    className="roleDropdown"
+                    value={item.id}
+                    label={item.name}
+                  />
                 ))}
               </Field>
               <ErrorMessage name="role" component="div" className="error" />
